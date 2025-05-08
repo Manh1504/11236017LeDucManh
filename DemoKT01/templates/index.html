@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách Khách hàng</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Danh sách Khách hàng</h1>
+        <table id="customerTable">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Họ</th>
+                    <th>Tên</th>
+                    <th>Công ty</th>
+                    <th>Địa chỉ</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dữ liệu sẽ được chèn bằng JavaScript -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        fetch('/customers')
+            .then(res => res.json())
+            .then(data => {
+                const tbody = document.querySelector('#customerTable tbody');
+                data.forEach(c => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${c.customer_id}</td>
+                        <td>${c.first_name}</td>
+                        <td>${c.last_name}</td>
+                        <td>${c.company}</td>
+                        <td>${c.address}</td>
+                        <td>${c.email}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            });
+    </script>
+</body>
+</html>
